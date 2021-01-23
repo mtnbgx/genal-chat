@@ -172,7 +172,7 @@ export class ChatGateway {
                 }
                 const relation1 = await this.friendRepository.findOne({userId: data.userId, friendId: data.friendId});
                 const relation2 = await this.friendRepository.findOne({userId: data.friendId, friendId: data.userId});
-                const roomId = data.userId > data.friendId ? data.userId + data.friendId : data.friendId + data.userId;
+                const roomId = data.userId > data.friendId ? data.userId + '-' + data.friendId : data.friendId + '-' + data.userId;
 
                 if (relation1 || relation2) {
                     this.server.to(data.userId + '').emit('addFriend', {code: RCode.FAIL, msg: '已经有该好友', data: data});
@@ -194,7 +194,7 @@ export class ChatGateway {
                 friendData.userId = friendId;
                 delete friendData._id;
                 await this.friendRepository.save(friendData);
-                client.join(roomId + '');
+                client.join(roomId);
 
                 // 如果是删掉的好友重新加, 重新获取一遍私聊消息
                 let messages = await getRepository(FriendMessage)
@@ -242,7 +242,7 @@ export class ChatGateway {
             const relation = await this.friendRepository.findOne({userId: data.userId, friendId: data.friendId});
             const roomId = data.userId > data.friendId ? data.userId + '-' + data.friendId : data.friendId + '-' + data.userId;
             if (relation) {
-                client.join(roomId + '');
+                client.join(roomId);
                 this.server.to(data.userId + '').emit('joinFriendSocket', {
                     code: RCode.OK,
                     msg: '进入私聊socket成功',
