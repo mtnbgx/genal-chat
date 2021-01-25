@@ -1,0 +1,5 @@
+:80 {
+    root * /home/node/dist
+    file_server
+    reverse_proxy /api genal-chat-server:3000
+}
