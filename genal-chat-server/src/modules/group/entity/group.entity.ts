@@ -14,7 +14,7 @@ export class Group {
   @Column({ default: '群主很懒,没写公告' })
   notice: string;
 
-  @Column({type: 'double',default: new Date().valueOf()})
+  @Column({type: 'int8',default: new Date().valueOf()})
   createTime: number;
 }
 

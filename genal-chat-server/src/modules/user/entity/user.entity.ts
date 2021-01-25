@@ -23,7 +23,7 @@ export class User {
     @Column({default: ''})
     tag: string;
 
-    @Column({type: 'double', default: new Date().valueOf()})
+    @Column({type: 'int8', default: new Date().valueOf()})
     createTime: number;
 
     token: string
