@@ -35,7 +35,7 @@ export class AuthService {
             msg: '登录成功',
             data: {
                 user: {...user, token},
-                token: token
+                token
             },
         };
     }
@@ -57,11 +57,12 @@ export class AuthService {
             userId: newUser.userId,
             groupId: 1,
         });
+        let token = this.jwtService.sign(payload)
         return {
             msg: '注册成功',
             data: {
-                user: newUser,
-                token: this.jwtService.sign(payload)
+                user: {...newUser, token},
+                token
             },
         };
     }
